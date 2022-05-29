@@ -39,6 +39,7 @@ const DatePicker = ({
   const inputElement = useRef(null);
   const shouldPreventToggle = useRef(false);
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
     const handleBlur = () => {
@@ -46,7 +47,10 @@ const DatePicker = ({
     };
     window.addEventListener('blur', handleBlur, false);
     return () => {
-      window.removeEventListener('blur', handleBlur, false);
+      if (isFirstRender) {
+        window.removeEventListener('blur', handleBlur, false);
+      };
+      isFirstRender.current = false;
     };
   }, []);
 
